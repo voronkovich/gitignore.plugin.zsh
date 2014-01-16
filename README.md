@@ -23,6 +23,11 @@ Or:
         
         gii TEMPLATE (will write output to the local .gitignore file)
 
+Demo
+----
+
+![gif](http://i.imgur.com/NiaFzeh.gif)
+
 License
 -------
 
