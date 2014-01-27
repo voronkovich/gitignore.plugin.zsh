@@ -1,18 +1,22 @@
 export ZSH_PLUGIN_GITIGNORE_PATH=$(dirname $(readlink -f $0))
 
 function gi() {
-    template=$(find $ZSH_PLUGIN_GITIGNORE_PATH/templates -iname "$1.gitignore")
-    if [[ ! -z $template ]]; then
-        echo "# $(basename $template | sed -e 's/.gitignore$//')"
-        cat $template
-    fi
+    for t in $*; do
+        get_gitignore_template $t
+    done
 }
 
 function gii() {
-    template=$(find $ZSH_PLUGIN_GITIGNORE_PATH/templates -iname "$1.gitignore")
-    if [[ ! -z $template ]]; then
-        echo "# $(basename $template | sed -e 's/.gitignore$//')" >> .gitignore
-        cat $template >> .gitignore
+    gi $* >> .gitignore
+}
+
+function get_gitignore_template() {
+    file=$(find $ZSH_PLUGIN_GITIGNORE_PATH/templates -iname "$1.gitignore")
+    if  [[ ! -z $file ]]; then
+        comment=$(basename $file | sed -e 's/.gitignore$//')
+        echo
+        echo "### $comment"
+        cat $file
     fi
 }
 
