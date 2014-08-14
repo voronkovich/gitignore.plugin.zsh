@@ -1,5 +1,9 @@
 export ZSH_PLUGIN_GITIGNORE_PATH=$(dirname $(readlink -f $0))
 
+function gie () {
+    $EDITOR .gitignore
+}
+
 function gi() {
     for t in $*; do
         get_gitignore_template $t
