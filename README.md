@@ -12,7 +12,7 @@ Antigen:
 
 Or clone this repo and add this into your .zshrc:
 
-        fpath=(path/to/cloned/repo $fpath)
+        source path/to/cloned/repo
 
 Usage
 -----
