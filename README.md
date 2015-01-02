@@ -12,7 +12,7 @@ Antigen:
 
 Or clone this repo and add this into your .zshrc:
 
-        source path/to/cloned/repo
+        source path/to/cloned/repo/gitignore.plugin.zsh
 
 Usage
 -----
