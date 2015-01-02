@@ -1,4 +1,4 @@
-export ZSH_PLUGIN_GITIGNORE_PATH=$(dirname $(readlink -f $0))
+export ZSH_PLUGIN_GITIGNORE_PATH=$(dirname $0)
 
 function gie () {
     $EDITOR .gitignore
