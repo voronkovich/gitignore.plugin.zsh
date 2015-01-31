@@ -23,6 +23,10 @@ Or:
         
         gii TEMPLATE (will write output to the local .gitignore file)
 
+Example:
+
+        gi vim eclipse symfony2
+
 Demo
 ----
 
