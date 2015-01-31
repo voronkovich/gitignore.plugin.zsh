@@ -25,7 +25,7 @@ function get_gitignore_template() {
 }
 
 _gitignore_get_template_list() {
-    find $ZSH_PLUGIN_GITIGNORE_PATH/templates -type f -name "*.gitignore" | xargs basename -a | sed -e 's/.gitignore$//' -e 's/\(.*\)/\L\1/'
+    find $ZSH_PLUGIN_GITIGNORE_PATH/templates -type f -name "*.gitignore" | xargs -n 1 basename | sed -e 's/.gitignore$//' -e 's/\(.*\)/\L\1/'
 }
 
 _gitignore () {
