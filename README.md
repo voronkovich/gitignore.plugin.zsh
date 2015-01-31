@@ -25,7 +25,7 @@ Or:
 
 Example:
 
-        gi vim eclipse symfony2
+        gi vim eclipse symfony
 
 Demo
 ----
