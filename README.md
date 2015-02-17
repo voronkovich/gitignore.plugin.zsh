@@ -12,7 +12,7 @@ Antigen:
 
 Or clone this repo and add this into your .zshrc:
 
-        source path/to/cloned/repo/gitignore.plugin.zsh
+        source path/to/cloned/repo/gitignore.plugin.zsh
 
 Usage
 -----
@@ -26,6 +26,10 @@ Or:
 Example:
 
         gi vim eclipse symfony
+
+Updating templates
+------------------
+My cronjob every midnight pulls gitignore submodule and commits changes. So, templates are always up to date. You should just use `antigen update`.
 
 Demo
 ----
