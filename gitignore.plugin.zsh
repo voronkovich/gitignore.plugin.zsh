@@ -11,6 +11,7 @@ function gi() {
 }
 
 function gii() {
+    # if NOCLOBBER option is setted
     [ -e .gitignore ] || touch .gitignore
     gi $* >> .gitignore
 }
