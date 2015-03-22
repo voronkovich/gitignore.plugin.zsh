@@ -11,6 +11,7 @@ function gi() {
 }
 
 function gii() {
+    [ -e .gitignore ] || touch .gitignore
     gi $* >> .gitignore
 }
 
