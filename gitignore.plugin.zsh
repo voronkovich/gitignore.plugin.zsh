@@ -11,7 +11,7 @@ function gi() {
 }
 
 function gii() {
-    gi $* >> .gitignore
+    gi $* >>! .gitignore
 }
 
 function get_gitignore_template() {
