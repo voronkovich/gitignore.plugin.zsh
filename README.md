@@ -1,7 +1,7 @@
 gitignore.plugin.zsh
 ====================
 
-Zsh plugin for creating .gitignore files.
+Zsh plugin for creating `.gitignore` files.
 
 Installation
 ------------
@@ -27,8 +27,16 @@ Example:
 
         gi vim eclipse symfony
 
+Custom templates
+----------------
+
+If you want to override existing template or add your own custom template, you can use variable `ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS` (it behaves like the `$PATH` variable):
+        
+        export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$HOME/.gitignore_teplates:$ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS:/etc/global_gitignore" 
+
 Updating templates
 ------------------
+
 My cronjob every midnight pulls gitignore submodule and commits changes. So, templates are always up to date. You should just use `antigen update`.
 
 Demo
