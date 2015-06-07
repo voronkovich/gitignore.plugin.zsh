@@ -1,4 +1,5 @@
 export ZSH_PLUGIN_GITIGNORE_PATH=$(dirname $0)
+export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$ZSH_PLUGIN_GITIGNORE_PATH/templates"
 
 function gie () {
     $EDITOR .gitignore
@@ -16,17 +17,23 @@ function gii() {
 }
 
 function get_gitignore_template() {
-    file=$(find $ZSH_PLUGIN_GITIGNORE_PATH/templates -iname "$1.gitignore")
-    if  [[ ! -z $file ]]; then
-        comment=$(basename $file | sed -e 's/.gitignore$//')
-        echo
-        echo "### $comment"
-        cat $file
-    fi
+    for tpath in ${(@s/:/)ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS}; do;
+        local file=$(find $tpath  -iname "$1.gitignore")
+        if  [[ ! -z $file ]]; then
+            comment=$(basename $file | sed -e 's/.gitignore$//')
+            echo
+            echo "### $comment"
+            cat $file
+            break;
+        fi
+    done;
 }
 
 _gitignore_get_template_list() {
-    find $ZSH_PLUGIN_GITIGNORE_PATH/templates -type f -name "*.gitignore" | xargs -n 1 basename | sed -e 's/.gitignore$//' -e 's/\(.*\)/\L\1/'
+    (for tpath in ${(@s/:/)ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS}; do; find $tpath -type f -name "*.gitignore"; done) \
+        | xargs -n 1 basename \
+        | sed -e 's/.gitignore$//' -e 's/\(.*\)/\L\1/' \
+        | sort -u
 }
 
 _gitignore () {
