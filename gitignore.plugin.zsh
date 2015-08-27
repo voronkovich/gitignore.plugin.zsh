@@ -6,9 +6,13 @@ function gie () {
 }
 
 function gi() {
-    for t in $*; do
-        get_gitignore_template $t
-    done
+    if [[ $? -eq 0 ]]; then
+        cat .gitignore
+    else
+        for t in $*; do
+            get_gitignore_template $t
+        done
+    fi
 }
 
 function gii() {
