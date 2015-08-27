@@ -6,7 +6,7 @@ function gie () {
 }
 
 function gi() {
-    [[ $? -eq 0 ]] && cat .gitignore && return 0
+    [[ $# -eq 0 ]] && cat .gitignore && return 0
 
     for t in $*; do
         get_gitignore_template $t
