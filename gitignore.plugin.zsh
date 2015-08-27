@@ -6,7 +6,10 @@ function gie () {
 }
 
 function gi() {
-    [[ $# -eq 0 ]] && cat .gitignore && return 0
+    if [[ $# -eq 0 ]]; then
+        cat .gitignore
+        return 0
+    fi
 
     for t in $*; do
         get_gitignore_template $t
@@ -14,6 +17,11 @@ function gi() {
 }
 
 function gii() {
+    if [[ $# -eq 0 ]]; then
+        cat .gitignore
+        return 0
+    fi
+
     # if NOCLOBBER option is setted
     gi $* >>! .gitignore
 }
