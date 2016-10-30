@@ -7,7 +7,7 @@ Installation
 ------------
 
 Antigen:
-    
+
         antigen bundle voronkovich/gitignore.plugin.zsh
 
 Or clone this repo and add this into your .zshrc:
@@ -20,7 +20,7 @@ Usage
         gi TEMPLATE (will write rules to the standard output)
 
 Or:
-        
+
         gii TEMPLATE (will write output to the local .gitignore file)
 
 Example:
@@ -31,13 +31,13 @@ Custom templates
 ----------------
 
 If you want to override existing template or add your own custom template, you can use variable `ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS` (it behaves like the `$PATH` variable):
-        
-        export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$HOME/.gitignore_teplates:$ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS:/etc/global_gitignore" 
+
+        export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$HOME/.gitignore_teplates:$ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS:/etc/global_gitignore"
 
 Updating templates
 ------------------
 
-My cronjob every midnight pulls gitignore submodule and commits changes. So, templates are always up to date. You should just use `antigen update`.
+Every 10 minutes the Heroku's sheduler runs a job (see `tools/update-templates`) that updates a submodule with templates and commits changes. So, templates are always up to date. You should just use `antigen update`.
 
 Demo
 ----
