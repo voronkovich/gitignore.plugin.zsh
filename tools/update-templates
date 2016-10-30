@@ -16,5 +16,5 @@ git clone --recursive 'https://github.com/voronkovich/gitignore.plugin.zsh' _rep
     && git add . \
     && git config user.name 'Oleg Voronkovich' \
     && git config user.email 'oleg-voronkovich@yandex.ru' \
-    && git commit -m '✈ Update templates' \
+    && git commit -m '=^_^= Update templates' \
     && git push -q "https://voronkovich:${GITHUB_TOKEN}@github.com/voronkovich/gitignore.plugin.zsh";
