@@ -1,0 +1,16 @@
+#!/usr/bin/env zunit
+
+@test 'Plugin should define completions' {
+    assert "${_COMPDEF_ARGS[-1]}" same_as '_gitignore gii'
+    assert "${_COMPDEF_ARGS[-2]}" same_as '_gitignore gi'
+}
+
+@setup {
+    # stubs/spyes
+    set -A _COMPDEF_ARGS
+    compdef() {
+        _COMPDEF_ARGS+="$@"
+    }
+
+    load ../gitignore.plugin.zsh
+}
