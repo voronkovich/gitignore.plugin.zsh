@@ -6,10 +6,7 @@
 
 [ ! -n "${GITHUB_TOKEN+1}" ] && echo "Github token is not defined." >&2 && exit 1;
 
-rm -rf _repo;
-
-git clone --recursive 'https://github.com/voronkovich/gitignore.plugin.zsh' _repo \
-    && cd _repo/templates \
+cd templates \
     && git checkout master \
     && git pull \
     && cd .. \
