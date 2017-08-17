@@ -7,5 +7,5 @@ before_install:
     - sudo chmod +x /usr/local/bin/zunit
 
 script:
-    - [[ "$TRAVIS_EVENT_TYPE" == 'cron' ]] && ./tools/update-templates
+    - if [[ "$TRAVIS_EVENT_TYPE" == 'cron' ]]; then ./tools/update-templates; fi
     - zunit
