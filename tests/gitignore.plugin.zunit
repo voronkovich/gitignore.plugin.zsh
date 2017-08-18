@@ -5,6 +5,16 @@
     assert "${_COMPDEF_ARGS[-2]}" same_as '_gitignore gi'
 }
 
+@test 'List all templates' {
+    export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$(pwd)/custom_templates:$ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS"
+
+    run _gitignore_get_template_list
+
+    assert "${lines[1]}" same_as 'composer'
+    assert "${lines[2]}" same_as 'custom'
+    assert "${lines[3]}" same_as 'symfony'
+}
+
 @test 'Command "gi" should output a ".gitignore" file when no arguments specified' {
     run gi
 
