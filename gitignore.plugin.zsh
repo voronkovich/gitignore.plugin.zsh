@@ -12,7 +12,7 @@ function gi() {
     fi
 
     for t in $*; do
-        get_gitignore_template "$t"
+        _gitignore_template "$t"
 
         [[ $? -gt 0 ]] && echo -e "\n\e[31mGitignore template \e[0m\"$t\"\e[31m not found.\e[0m" >&2
     done
@@ -29,14 +29,14 @@ function gii() {
     fi
 }
 
-function get_gitignore_template() {
+function _gitignore_template() {
     for tpath in ${(@s/:/)ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS}; do;
-        local file=$(find $tpath  -iname "$1.gitignore")
+        local file=$(find "$tpath"  -iname "$1.gitignore")
         if  [[ ! -z $file ]]; then
             comment=$(basename $file | sed -e 's/.gitignore$//')
             echo
             echo "### $comment"
-            cat $file
+            cat "$file"
             return 0;
         fi
     done;
@@ -45,7 +45,7 @@ function get_gitignore_template() {
 }
 
 _gitignore_get_template_list() {
-    (for tpath in ${(@s/:/)ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS}; do; find $tpath -type f -name "*.gitignore"; done) \
+    (for tpath in ${(@s/:/)ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS}; do; find "$tpath" -type f -name "*.gitignore"; done) \
         | xargs -n 1 basename \
         | sed -e 's/.gitignore$//' -e 's/\(.*\)/\L\1/' \
         | sort -u
