@@ -12,18 +12,21 @@ function gi() {
     fi
 
     for t in $*; do
-        get_gitignore_template $t
+        get_gitignore_template "$t"
+
+        [[ $? -gt 0 ]] && echo -e "\n\e[31mGitignore template \e[0m\"$t\"\e[31m not found.\e[0m" >&2
     done
+
+    return 0
 }
 
 function gii() {
     if [[ $# -eq 0 ]]; then
-        cat .gitignore
-        return 0
+        gi
+    else
+        # if NOCLOBBER option is set
+        gi $* >>! .gitignore
     fi
-
-    # if NOCLOBBER option is setted
-    gi $* >>! .gitignore
 }
 
 function get_gitignore_template() {
@@ -34,9 +37,11 @@ function get_gitignore_template() {
             echo
             echo "### $comment"
             cat $file
-            break;
+            return 0;
         fi
     done;
+
+    return 1;
 }
 
 _gitignore_get_template_list() {

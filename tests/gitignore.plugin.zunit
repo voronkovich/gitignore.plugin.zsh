@@ -5,6 +5,70 @@
     assert "${_COMPDEF_ARGS[-2]}" same_as '_gitignore gi'
 }
 
+@test 'Command "gi" should output a ".gitignore" file when no arguments specified' {
+    run gi
+
+    assert $output same_as '# empty'
+}
+
+@test 'Command "gi" should output specified templates' {
+    run gi composer
+
+    assert $state equals 0
+    assert "${lines[1]}" same_as ''
+    assert "${lines[2]}" same_as '### Composer'
+    assert "${lines[3]}" same_as 'composer.gitignore'
+
+    run gi symfony composer
+
+    assert $state equals 0
+    assert "${lines[1]}" same_as ''
+    assert "${lines[2]}" same_as '### Symfony'
+    assert "${lines[3]}" same_as 'symfony.gitignore'
+    assert "${lines[4]}" same_as ''
+    assert "${lines[5]}" same_as '### Composer'
+    assert "${lines[6]}" same_as 'composer.gitignore'
+}
+
+@test 'Command "gi" should show an error when a template not found' {
+    run gi unexisting
+
+    assert $state equals 0
+    assert "${lines[2]}" same_as '\e[31mGitignore template \e[0m"unexisting"\e[31m not found.\e[0m'
+
+    run gi composer unexisting
+
+    assert $state equals 0
+    assert "${lines[1]}" same_as ''
+    assert "${lines[2]}" same_as '### Composer'
+    assert "${lines[3]}" same_as 'composer.gitignore'
+    assert "${lines[4]}" same_as ''
+    assert "${lines[5]}" same_as '\e[31mGitignore template \e[0m"unexisting"\e[31m not found.\e[0m'
+}
+
+@test 'Command "gi" should support multiple templates paths' {
+    export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$(pwd)/custom_templates:$ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS"
+
+    run gi custom
+
+    assert $state equals 0
+    assert "${lines[3]}" same_as 'custom.gitignore'
+
+    run gi composer
+
+    assert $state equals 0
+    assert "${lines[3]}" same_as 'composer.gitignore'
+}
+
+@test 'Command "gi" should output a first found template' {
+    export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$(pwd)/custom_templates:$ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS"
+
+    run gi symfony
+
+    assert $state equals 0
+    assert "${lines[3]}" same_as 'custom symfony.gitignore'
+}
+
 @setup {
     # stubs/spyes
     set -A _COMPDEF_ARGS
@@ -13,4 +77,8 @@
     }
 
     load ../gitignore.plugin.zsh
+
+    cd test_fixtures
+
+    export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$(pwd)/templates"
 }
