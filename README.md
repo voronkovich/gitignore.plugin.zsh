@@ -5,9 +5,13 @@ Zsh plugin for creating `.gitignore` files.
 Installation
 ------------
 
-Antigen:
+[Antigen](https://github.com/zsh-users/antigen):
 
         antigen bundle voronkovich/gitignore.plugin.zsh
+
+[Zplug](https://github.com/zplug/zplug):
+
+        zplug voronkovich/gitignore.plugin.zsh
 
 Or clone this repo and add this into your .zshrc:
 
