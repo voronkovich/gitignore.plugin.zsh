@@ -1,8 +1,12 @@
-export ZSH_PLUGIN_GITIGNORE_PATH=$(dirname $0)
+# Standarized $0 handling, following:
+# https://github.com/zdharma/Zsh-100-Commits-Club/blob/master/Zsh-Plugin-Standard.adoc
+0="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
+export ZSH_PLUGIN_GITIGNORE_PATH=${0:h}
 export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$ZSH_PLUGIN_GITIGNORE_PATH/templates"
 
 function gie () {
-    $EDITOR .gitignore
+    local root_path="$(git rev-parse --show-toplevel 2>/dev/null)"
+    "${EDITOR:-vim}" "$root_path"${root_path:+/}.gitignore
 }
 
 function gi() {
@@ -33,7 +37,7 @@ function _gitignore_template() {
     for tpath in ${(@s/:/)ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS}; do;
         local file=$(find "$tpath"  -iname "$1.gitignore")
         if  [[ ! -z $file ]]; then
-            comment=$(basename $file | sed -e 's/.gitignore$//')
+            comment=$(command basename $file | sed -e 's/.gitignore$//')
             echo
             echo "### $comment"
             cat "$file"
@@ -45,10 +49,10 @@ function _gitignore_template() {
 }
 
 _gitignore_get_template_list() {
-    (for tpath in ${(@s/:/)ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS}; do; find "$tpath" -type f -name "*.gitignore"; done) \
-        | xargs -n 1 basename \
-        | sed -e 's/.gitignore$//' -e 's/\(.*\)/\L\1/' \
-        | sort -u
+    (for tpath in ${(@s/:/)ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS}; do; command find "$tpath" -type f -name "*.gitignore"; done) \
+        | command xargs -n 1 basename \
+        | command sed -e 's/.gitignore$//' -e 's/\(.*\)/\L\1/' \
+        | command sort -u
 }
 
 _gitignore () {
