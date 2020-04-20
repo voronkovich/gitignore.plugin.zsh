@@ -52,7 +52,7 @@ _gitignore_get_template_list() {
     (for tpath in ${(@s/:/)ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS}; do; command find "$tpath" -type f -name "*.gitignore"; done) \
         | command xargs -n 1 basename \
         | command sed -e 's/.gitignore$//' \
-        | tr "[:upper:]" "[:lower:]" \
+        | command tr '[:upper:]' '[:lower:]' \
         | command sort -u
 }
 
