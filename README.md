@@ -1,4 +1,4 @@
-# gitignore.plugin.zsh [![Build Status](https://travis-ci.org/voronkovich/gitignore.plugin.zsh.svg?branch=master)](https://travis-ci.org/voronkovich/gitignore.plugin.zsh)
+# gitignore.plugin.zsh [![Build Status](https://app.travis-ci.com/voronkovich/gitignore.plugin.zsh.svg?branch=master)](https://app.travis-ci.com/github/voronkovich/gitignore.plugin.zsh)
 
 Zsh plugin for creating `.gitignore` files.
 
