@@ -6,9 +6,10 @@
 
 [ ! -n "${GITHUB_TOKEN+1}" ] && echo "Github token is not defined." >&2 && exit 1;
 
-cd templates \
+git submodule init \
+    && git submodule update \
+    && cd templates \
     && git checkout main \
-    && git pull \
     && cd .. \
     && git add . \
     && git config push.default simple \
