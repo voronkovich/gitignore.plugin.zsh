@@ -88,7 +88,7 @@
 
     load ../gitignore.plugin.zsh
 
-    cd test_fixtures
+    cd tests/_fixtures
 
     export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$(pwd)/templates"
 }
