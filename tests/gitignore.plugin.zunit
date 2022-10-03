@@ -1,11 +1,11 @@
 #!/usr/bin/env zunit
 
-@test 'Plugin should define completions' {
+@test 'Plugin defines completions' {
     assert "${_COMPDEF_ARGS[-1]}" same_as '_gitignore gii'
     assert "${_COMPDEF_ARGS[-2]}" same_as '_gitignore gi'
 }
 
-@test 'List all templates' {
+@test 'Lists all templates' {
     export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$(pwd)/custom_templates:$ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS"
 
     run _gitignore_get_template_list
@@ -15,13 +15,13 @@
     assert "${lines[3]}" same_as 'symfony'
 }
 
-@test 'Command "gi" should output a ".gitignore" file when no arguments specified' {
+@test 'Command "gi" outputs a ".gitignore" file when no arguments specified' {
     run gi
 
     assert $output same_as '# empty'
 }
 
-@test 'Command "gi" should output specified templates' {
+@test 'Command "gi" outputs specified templates' {
     run gi composer
 
     assert $state equals 0
@@ -40,7 +40,7 @@
     assert "${lines[6]}" same_as 'composer.gitignore'
 }
 
-@test 'Command "gi" should show an error when a template not found' {
+@test 'Command "gi" shows an error when a template not found' {
     run gi unexisting
 
     assert $state equals 0
@@ -56,7 +56,7 @@
     assert "${lines[5]}" same_as '\e[31mGitignore template \e[0m"unexisting"\e[31m not found.\e[0m'
 }
 
-@test 'Command "gi" should support multiple templates paths' {
+@test 'Command "gi" supports multiple templates paths' {
     export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$(pwd)/custom_templates:$ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS"
 
     run gi custom
@@ -70,7 +70,7 @@
     assert "${lines[3]}" same_as 'composer.gitignore'
 }
 
-@test 'Command "gi" should output a first found template' {
+@test 'Command "gi" outputs a first found template' {
     export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$(pwd)/custom_templates:$ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS"
 
     run gi symfony
