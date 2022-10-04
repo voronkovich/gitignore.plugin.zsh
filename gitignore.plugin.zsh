@@ -37,7 +37,7 @@ gi() {
 
     if [[ -n "${opt_help}" ]]; then
         echo -ne "
-Write specified templates to stdin
+Write specified templates to stdout
 
 Usage:
 
