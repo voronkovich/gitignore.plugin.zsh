@@ -15,10 +15,29 @@
     assert "${lines[3]}" same_as 'symfony'
 }
 
-@test 'Command "gi" outputs a ".gitignore" file when no arguments specified' {
+@test 'Command "gi" outputs a local ".gitignore" file when no arguments specified' {
     run gi
 
     assert $output same_as '# empty'
+}
+
+@test 'Command "gi" outputs a global gitignore file when --global option specified' {
+    git() {
+        echo "${PWD}/.gitignore_global"
+    }
+
+    run gi --global
+
+    assert "${output}" same_as '# empty global'
+}
+
+@test 'Command "gi" shows an error when --global option specified but global gitignore file not configured' {
+    run gi --global
+
+    assert $state equals 1
+    assert "${lines[2]}" contains 'Global gitignore file not configured.'
+    assert "${lines[4]}" same_as 'Try:'
+    assert "${lines[6]}" same_as '  git config --global core.excludesfile ~/.gitignore'
 }
 
 @test 'Command "gi" outputs specified templates' {
@@ -84,6 +103,10 @@
     set -A _COMPDEF_ARGS
     compdef() {
         _COMPDEF_ARGS+="$@"
+    }
+    set -A _GIT_ARGS
+    git() {
+        _GIT_ARGS+="$@"
     }
 
     load ../gitignore.plugin.zsh

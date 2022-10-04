@@ -5,14 +5,55 @@ export ZSH_PLUGIN_GITIGNORE_PATH="${0:h}"
 export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="${ZSH_PLUGIN_GITIGNORE_PATH}/templates"
 
 gie() {
-    local root="$(command git rev-parse --show-toplevel 2>/dev/null)"
+    local opt_help opt_global file
 
-    "${EDITOR:-vim}" "${root}${root:+/}.gitignore"
+    zparseopts -D {h,-help}=opt_help {g,-global}=opt_global || return 1
+
+    if [[ -n "${opt_help}" ]]; then
+        echo -ne "
+Open gitignore file in editor (${EDITOR:-vim})
+
+Usage:
+
+  ${0} [OPTION]...
+
+Options:
+
+  -g, --global  Open global gitignore file
+  -h, --help    Show this help message
+"
+        return
+    fi
+
+    _gitignore_detect_file || return
+
+    "${EDITOR:-vim}" "${file}"
 }
 
 gi() {
+    local opt_help opt_global file
+
+    zparseopts -D {h,-help}=opt_help {g,-global}=opt_global || return 1
+
+    if [[ -n "${opt_help}" ]]; then
+        echo -ne "
+Write specified templates to stdin
+
+Usage:
+
+  ${0} [OPTION]... [TEMPLATE]...
+
+Options:
+
+  -g, --global  Use global gitignore file
+  -h, --help    Show this help message
+"
+        return
+    fi
+
     if [[ $# -eq 0 ]]; then
-        command cat .gitignore
+        _gitignore_detect_file || return
+        command cat "${file}"
         return
     fi
 
@@ -26,12 +67,61 @@ gi() {
 }
 
 gii() {
-    if [[ $# -eq 0 ]]; then
-        gi
-    else
-        # if NOCLOBBER option is set
-        gi "$@" >>! .gitignore
+    local opt_help opt_global file
+
+    zparseopts -D {h,-help}=opt_help {g,-global}=opt_global || return 1
+
+    if [[ -n "${opt_help}" ]]; then
+        echo -ne "
+Write specified templates to gitignore file
+
+Usage:
+
+  ${0} [OPTION]... [TEMPLATE]...
+
+Options:
+
+  -g, --global  Use global gitignore file
+  -h, --help    Show this help message
+"
+        return
     fi
+
+    _gitignore_detect_file || return
+
+    if [[ $# -eq 0 ]]; then
+        command cat "${file}"
+        return
+    fi
+
+    # if NOCLOBBER option is set
+    gi "$@" >>! "${file}"
+}
+
+_gitignore_detect_file() {
+    if [[ -n "${opt_global}" ]]; then
+        file="$(_gitignore_global)"
+
+        if [[ -z "${file}" ]]; then
+            echo "\nGlobal gitignore file not configured." >&2
+            echo "\nTry:\n\n  git config --global core.excludesfile ~/.gitignore" >&2
+            return 1
+        fi
+    else
+        file="$(_gitignore_local)"
+    fi
+}
+
+_gitignore_local() {
+    local root="$(git rev-parse --show-toplevel 2>/dev/null)"
+
+    echo "${root:-${PWD}}/.gitignore"
+}
+
+_gitignore_global() {
+    local file="$(git config --global core.excludesfile 2>/dev/null)"
+
+    echo "${file/\~\//${HOME}/}"
 }
 
 _gitignore_template() {
