@@ -155,7 +155,7 @@ _gitignore_get_template_list() {
 
 _gitignore() {
   compset -P '*,'
-  compadd -S '' "$(_gitignore_get_template_list)"
+  compadd -S '' $(_gitignore_get_template_list)
 }
 
 compdef _gitignore gi
