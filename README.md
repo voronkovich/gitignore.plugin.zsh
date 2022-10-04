@@ -1,53 +1,96 @@
 # gitignore.plugin.zsh [![Build Status](https://app.travis-ci.com/voronkovich/gitignore.plugin.zsh.svg?branch=master)](https://app.travis-ci.com/github/voronkovich/gitignore.plugin.zsh)
 
-Zsh plugin for creating `.gitignore` files.
+ZSH plugin for creating `.gitignore` files.
 
-Installation
-------------
+## Installation
 
-[Antigen](https://github.com/zsh-users/antigen):
+### [Antigen](https://github.com/zsh-users/antigen)
 
-        antigen bundle voronkovich/gitignore.plugin.zsh
+```sh
+antigen bundle voronkovich/gitingore.plugin.zsh
+```
+### [Zplug](https://github.com/zplug/zplug)
 
-[Zplug](https://github.com/zplug/zplug):
+```sh
+zplug "voronkovich/gitingore.plugin.zsh"
+```
 
-        zplug voronkovich/gitignore.plugin.zsh
+### [Oh My Zsh](https://github.com/ohmyzsh/ohmyzsh)
 
-Or clone this repo and add this into your .zshrc:
+```sh
+git clone --recurse-submodules https://github.com/voronkovich/gitingore.plugin.zsh ~/.oh-my-zsh/custom/plugins/gitingore
+```
 
-        source path/to/cloned/repo/gitignore.plugin.zsh
+Edit `.zshrc` to enable the plugin:
 
-Usage
------
+```sh
+plugins=(... gitingore)
+```
 
-        gi TEMPLATE (will write rules to the standard output)
+### Manual
 
-Or:
+Clone this repo:
 
-        gii TEMPLATE (will write output to the local .gitignore file)
+```sh
+git clone --recurse-submodules https://github.com/voronkovich/gitingore.plugin.zsh path/to/repo
+```
+
+And add this into your `.zshrc`:
+
+```sh
+source path/to/repo/gitingore.plugin.zsh
+```
+
+## Usage
+
+```sh
+# Write templates to the standard output
+gi TEMPLATE 
+
+# Write templates to the local .gitignore file
+gii TEMPLATE 
+
+# Open .gitignore file in editor ($EDITOR)
+gie
+```
 
 Example:
 
-        gi vim eclipse symfony
+```sh
+gi vim eclipse symfony
+```
 
-Custom templates
-----------------
+## Global gitignore
+
+The plugin also supports [global gitignore](https://git-scm.com/docs/gitignore#_synopsis) files. To use global gitignore file instead of local one add `--global` flag to any command:
+
+```sh
+# Output content of the global gitignore file
+gi -g
+
+# Write templates to the global gitignore file
+gii -g TEMPLATE 
+
+# Open global gitignore file in editor ($EDITOR)
+gie -g
+```
+
+## Custom templates
 
 If you want to override an existing template or add your own custom one, you can use an environment variable `ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS` (it behaves like the `$PATH` variable):
 
-        export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$HOME/.gitignore_teplates:$ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS:/etc/global_gitignore"
+```sh
+export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="${HOME}/.gitignore_teplates:${ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS}:/etc/global_gitignore"
+```
 
-Updating templates
-------------------
+## Updating templates
 
-Every day the [Travis CI](https://docs.travis-ci.com/user/cron-jobs/) runs a job (see `tools/update-templates`) that updates a submodule with templates and commits the changes. So, templates are always up to date. You should just use `antigen update`.
+Every day the [Travis CI](https://docs.travis-ci.com/user/cron-jobs/) runs a job (see [tools/update-templates](tools/update-templates)) that updates a submodule with templates and commits the changes. So, templates are always up to date. You should just use `antigen update`.
 
-Demo
-----
+## Demo
 
 ![gif](http://i.imgur.com/NiaFzeh.gif)
 
-License
--------
+## License
 
-Copyright (c) Voronkovich Oleg. Distributed under the MIT.
+Copyright (c) Voronkovich Oleg. Distributed under the [MIT](LICENSE).
