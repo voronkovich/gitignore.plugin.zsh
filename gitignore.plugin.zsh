@@ -101,12 +101,6 @@ Options:
 _gitignore_detect_file() {
     if [[ -n "${opt_global}" ]]; then
         file="$(_gitignore_global)"
-
-        if [[ -z "${file}" ]]; then
-            echo "\nGlobal gitignore file not configured." >&2
-            echo "\nTry:\n\n  git config --global core.excludesfile ~/.gitignore" >&2
-            return 1
-        fi
     else
         file="$(_gitignore_local)"
     fi
@@ -115,13 +109,18 @@ _gitignore_detect_file() {
 _gitignore_local() {
     local root="$(git rev-parse --show-toplevel 2>/dev/null)"
 
-    echo "${root:-${PWD}}/.gitignore"
+    echo "${root:-"${PWD}"}/.gitignore"
 }
 
 _gitignore_global() {
     local file="$(git config --global core.excludesfile 2>/dev/null)"
 
-    echo "${file/\~\//${HOME}/}"
+    if [[ -n "${file}" ]]; then
+        echo "${file/\~\//${HOME}/}"
+        return
+    fi
+
+    echo "${XDG_CONFIG_HOME:-"${HOME}/.config"}/git/ignore"
 }
 
 _gitignore_template() {

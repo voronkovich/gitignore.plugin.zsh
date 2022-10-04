@@ -31,13 +31,13 @@
     assert "${output}" same_as '# empty global'
 }
 
-@test 'Command "gi" shows an error when --global option specified but global gitignore file not configured' {
+@test 'Command "gi" uses default global gitignore file when --global option specified but file not configured' {
+    export XDG_CONFIG_HOME="${PWD}/.config"
+
     run gi --global
 
-    assert $state equals 1
-    assert "${lines[2]}" contains 'Global gitignore file not configured.'
-    assert "${lines[4]}" same_as 'Try:'
-    assert "${lines[6]}" same_as '  git config --global core.excludesfile ~/.gitignore'
+    assert $state equals 0
+    assert "${output}" same_as '# empty default global'
 }
 
 @test 'Command "gi" outputs specified templates' {
