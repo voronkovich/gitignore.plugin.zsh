@@ -125,14 +125,13 @@ _gitignore_global() {
 }
 
 _gitignore_template() {
-    local tpath file comment
+    local tpath file
 
     for tpath in "${(@s/:/)ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS}"; do
-        file="$(command find "${tpath}"  -iname "${1}.gitignore")"
+        file="$(command find "${tpath}" -iname "${1}.gitignore")"
         if  [[ ! -z "${file}" ]]; then
-            comment=$(command basename "${file}" | command sed -e 's/.gitignore$//')
             echo
-            echo "### ${comment}"
+            echo "### $(_gitignore_template_name "${file}")"
             command cat "${file}"
             return
         fi
@@ -141,21 +140,32 @@ _gitignore_template() {
     return 1
 }
 
-_gitignore_get_template_list() {
+_gitignore_template_name() {
+    local file
+
+    if [[ $# -gt 0 ]]; then
+        for file; do
+            echo "${${file:t}%.gitignore}"
+        done
+        return
+    fi
+
+    while read file; do
+        echo "${${file:t:l}%.gitignore}"
+    done | command sort -u
+}
+
+_gitignore_template_list() {
     local tpath
 
     for tpath in "${(@s/:/)ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS}"; do
         command find "${tpath}" -type f -name "*.gitignore"
-    done \
-        | command xargs -n 1 basename \
-        | command sed -e 's/.gitignore$//' \
-        | command tr '[:upper:]' '[:lower:]' \
-        | command sort -u
+    done | _gitignore_template_name
 }
 
 _gitignore() {
   compset -P '*,'
-  compadd -S '' $(_gitignore_get_template_list)
+  compadd -S '' $(_gitignore_template_list)
 }
 
 compdef _gitignore gi

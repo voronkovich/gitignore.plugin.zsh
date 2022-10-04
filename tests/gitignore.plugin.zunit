@@ -8,7 +8,7 @@
 @test 'Lists all templates' {
     export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$(pwd)/custom_templates:$ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS"
 
-    run _gitignore_get_template_list
+    run _gitignore_template_list
 
     assert "${lines[1]}" same_as 'composer'
     assert "${lines[2]}" same_as 'custom'
