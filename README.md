@@ -7,18 +7,18 @@ ZSH plugin for creating `.gitignore` files.
 ### [Antigen](https://github.com/zsh-users/antigen)
 
 ```sh
-antigen bundle voronkovich/gitingore.plugin.zsh
+antigen bundle voronkovich/gitignore.plugin.zsh
 ```
 ### [Zplug](https://github.com/zplug/zplug)
 
 ```sh
-zplug "voronkovich/gitingore.plugin.zsh"
+zplug "voronkovich/gitignore.plugin.zsh"
 ```
 
 ### [Oh My Zsh](https://github.com/ohmyzsh/ohmyzsh)
 
 ```sh
-git clone --recurse-submodules https://github.com/voronkovich/gitingore.plugin.zsh ~/.oh-my-zsh/custom/plugins/gitingore
+git clone --recurse-submodules https://github.com/voronkovich/gitignore.plugin.zsh ~/.oh-my-zsh/custom/plugins/gitingore
 ```
 
 Edit `.zshrc` to enable the plugin:
@@ -32,13 +32,13 @@ plugins=(... gitingore)
 Clone this repo:
 
 ```sh
-git clone --recurse-submodules https://github.com/voronkovich/gitingore.plugin.zsh path/to/repo
+git clone --recurse-submodules https://github.com/voronkovich/gitignore.plugin.zsh path/to/repo
 ```
 
 And add this into your `.zshrc`:
 
 ```sh
-source path/to/repo/gitingore.plugin.zsh
+source path/to/repo/gitignore.plugin.zsh
 ```
 
 ## Usage
