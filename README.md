@@ -24,7 +24,7 @@ git clone --recurse-submodules https://github.com/voronkovich/gitignore.plugin.z
 Edit `.zshrc` to enable the plugin:
 
 ```sh
-plugins=(... gitingore)
+plugins=(... gitignore)
 ```
 
 ### Manual
