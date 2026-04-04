@@ -30,11 +30,12 @@ gi vim eclipse symfony
 
 ## Installation
 
-### [Antigen](https://github.com/zsh-users/antigen)
+### [Zinit](https://github.com/zdharma-continuum/zinit)
 
 ```sh
-antigen bundle voronkovich/gitignore.plugin.zsh
+zinit light voronkovich/gitignore.plugin.zsh
 ```
+
 ### [Zplug](https://github.com/zplug/zplug)
 
 ```sh
@@ -94,7 +95,7 @@ export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="${HOME}/.gitignore_templates:${ZSH_P
 
 ## Updating templates
 
-Every day a [GitHub Actions](https://docs.github.com/en/actions/scheduling-your-workflows/scheduling-your-workflow) scheduled workflow runs a job that updates a submodule with templates and commits the changes. So, templates are always up to date. You should just use `antigen update`.
+Every day a [GitHub Actions](https://docs.github.com/en/actions/scheduling-your-workflows/scheduling-your-workflow) scheduled workflow runs a job that updates a submodule with templates and commits the changes. So, templates are always up to date. You should just use `zinit update`.
 
 ## License
 
