@@ -88,7 +88,7 @@ export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="${HOME}/.gitignore_teplates:${ZSH_PL
 
 ## Updating templates
 
-Every day the [Travis CI](https://docs.travis-ci.com/user/cron-jobs/) runs a job (see [tools/update-templates](tools/update-templates)) that updates a submodule with templates and commits the changes. So, templates are always up to date. You should just use `antigen update`.
+Every day a [GitHub Actions](https://docs.github.com/en/actions/scheduling-your-workflows/scheduling-your-workflow) scheduled workflow runs a job that updates a submodule with templates and commits the changes. So, templates are always up to date. You should just use `antigen update`.
 
 ## Demo
 
