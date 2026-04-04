@@ -1,0 +1,24 @@
+name: Update Templates
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch: # allow manual trigger
+
+jobs:
+  update-templates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: "recursive"
+
+      - run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'bot@github.com'
+          git submodule update --remote
+          git add templates
+          if ! git diff --cached --quiet; then
+            git commit -m "Update templates"
+            git push
+          fi
