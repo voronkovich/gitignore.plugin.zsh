@@ -1,4 +1,7 @@
-# gitignore.plugin.zsh [![Build Status](https://app.travis-ci.com/voronkovich/gitignore.plugin.zsh.svg?branch=master)](https://app.travis-ci.com/github/voronkovich/gitignore.plugin.zsh)
+# gitignore.plugin.zsh
+
+[![Tests](https://github.com/voronkovich/gitignore.plugin.zsh/actions/workflows/tests.yml/badge.svg)](https://github.com/voronkovich/gitignore.plugin.zsh/actions/workflows/tests.yml)
+[![Update Templates](https://github.com/voronkovich/gitignore.plugin.zsh/actions/workflows/update-templates.yml/badge.svg)](https://github.com/voronkovich/gitignore.plugin.zsh/actions/workflows/update-templates.yml)
 
 ZSH plugin for creating `.gitignore` files.
 
@@ -45,10 +48,10 @@ source path/to/repo/gitignore.plugin.zsh
 
 ```sh
 # Write templates to the standard output
-gi TEMPLATE 
+gi TEMPLATE
 
 # Write templates to the local .gitignore file
-gii TEMPLATE 
+gii TEMPLATE
 
 # Open .gitignore file in editor ($EDITOR)
 gie
@@ -69,7 +72,7 @@ The plugin also supports [global gitignore](https://git-scm.com/docs/gitignore#_
 gi -g
 
 # Write templates to the global gitignore file
-gii -g TEMPLATE 
+gii -g TEMPLATE
 
 # Open global gitignore file in editor ($EDITOR)
 gie -g
