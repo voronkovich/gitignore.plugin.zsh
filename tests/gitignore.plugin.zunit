@@ -1,8 +1,8 @@
 #!/usr/bin/env zunit
 
 @test 'Plugin defines completions' {
-    assert "${_COMPDEF_ARGS[-1]}" same_as '_gitignore gii'
-    assert "${_COMPDEF_ARGS[-2]}" same_as '_gitignore gi'
+    assert "${_COMPDEF_ARGS[-1]}" same_as '_gitignore gitignore-append'
+    assert "${_COMPDEF_ARGS[-2]}" same_as '_gitignore gitignore'
 }
 
 @test 'Lists all templates' {
@@ -15,40 +15,40 @@
     assert "${lines[3]}" same_as 'symfony'
 }
 
-@test 'Command "gi" outputs a local ".gitignore" file when no arguments specified' {
-    run gi
+@test 'Command "gitignore" outputs a local ".gitignore" file when no arguments specified' {
+    run gitignore
 
     assert $output same_as '# empty'
 }
 
-@test 'Command "gi" outputs a global gitignore file when --global option specified' {
+@test 'Command "gitignore" outputs a global gitignore file when --global option specified' {
     git() {
         echo "${PWD}/.gitignore_global"
     }
 
-    run gi --global
+    run gitignore --global
 
     assert "${output}" same_as '# empty global'
 }
 
-@test 'Command "gi" uses default global gitignore file when --global option specified but file not configured' {
+@test 'Command "gitignore" uses default global gitignore file when --global option specified but file not configured' {
     export XDG_CONFIG_HOME="${PWD}/.config"
 
-    run gi --global
+    run gitignore --global
 
     assert $state equals 0
     assert "${output}" same_as '# empty default global'
 }
 
-@test 'Command "gi" outputs specified templates' {
-    run gi composer
+@test 'Command "gitignore" outputs specified templates' {
+    run gitignore composer
 
     assert $state equals 0
     assert "${lines[1]}" same_as ''
     assert "${lines[2]}" same_as '### Composer'
     assert "${lines[3]}" same_as 'composer.gitignore'
 
-    run gi symfony composer
+    run gitignore symfony composer
 
     assert $state equals 0
     assert "${lines[1]}" same_as ''
@@ -59,13 +59,13 @@
     assert "${lines[6]}" same_as 'composer.gitignore'
 }
 
-@test 'Command "gi" shows an error when a template not found' {
-    run gi unexisting
+@test 'Command "gitignore" shows an error when a template not found' {
+    run gitignore unexisting
 
     assert $state equals 0
     assert "${lines[2]}" same_as '\e[31mGitignore template \e[0m"unexisting"\e[31m not found.\e[0m'
 
-    run gi composer unexisting
+    run gitignore composer unexisting
 
     assert $state equals 0
     assert "${lines[1]}" same_as ''
@@ -75,24 +75,24 @@
     assert "${lines[5]}" same_as '\e[31mGitignore template \e[0m"unexisting"\e[31m not found.\e[0m'
 }
 
-@test 'Command "gi" supports multiple templates paths' {
+@test 'Command "gitignore" supports multiple templates paths' {
     export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$(pwd)/custom_templates:$ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS"
 
-    run gi custom
+    run gitignore custom
 
     assert $state equals 0
     assert "${lines[3]}" same_as 'custom.gitignore'
 
-    run gi composer
+    run gitignore composer
 
     assert $state equals 0
     assert "${lines[3]}" same_as 'composer.gitignore'
 }
 
-@test 'Command "gi" outputs a first found template' {
+@test 'Command "gitignore" outputs a first found template' {
     export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="$(pwd)/custom_templates:$ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS"
 
-    run gi symfony
+    run gitignore symfony
 
     assert $state equals 0
     assert "${lines[3]}" same_as 'custom symfony.gitignore'

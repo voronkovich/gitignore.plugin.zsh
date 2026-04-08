@@ -4,7 +4,11 @@
 export ZSH_PLUGIN_GITIGNORE_PATH="${0:h}"
 export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="${ZSH_PLUGIN_GITIGNORE_PATH}/templates"
 
-gie() {
+alias gi=gitignore
+alias gii=gitignore-append
+alias gie=gitignore-edit
+
+gitignore-edit() {
     local opt_help opt_global file
 
     zparseopts -D {h,-help}=opt_help {g,-global}=opt_global || return 1
@@ -30,7 +34,7 @@ Options:
     "${EDITOR:-vim}" "${file}"
 }
 
-gi() {
+gitignore() {
     local opt_help opt_global file
 
     zparseopts -D {h,-help}=opt_help {g,-global}=opt_global || return 1
@@ -66,7 +70,7 @@ Options:
     done
 }
 
-gii() {
+gitignore-append() {
     local opt_help opt_global file
 
     zparseopts -D {h,-help}=opt_help {g,-global}=opt_global || return 1
@@ -95,7 +99,7 @@ Options:
     fi
 
     # if NOCLOBBER option is set
-    gi "$@" >>! "${file}"
+    gitignore "$@" >>! "${file}"
 }
 
 _gitignore_detect_file() {
@@ -167,5 +171,5 @@ _gitignore() {
   compadd -S '' $(_gitignore_template_list)
 }
 
-compdef _gitignore gi
-compdef _gitignore gii
+compdef _gitignore gitignore
+compdef _gitignore gitignore-append
