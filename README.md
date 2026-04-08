@@ -13,20 +13,28 @@ ZSH plugin for creating `.gitignore` files.
 
 ```sh
 # Write templates to the standard output
-gi TEMPLATE
+gitignore TEMPLATE
 
 # Append templates to the local .gitignore file
-gii TEMPLATE
+gitignore-append TEMPLATE
 
 # Open .gitignore file in editor ($EDITOR)
-gie
+gitignore-edit
 ```
 
 Example:
 
 ```sh
-gi vim eclipse symfony
+gitignore vim eclipse symfony
 ```
+
+### Aliases
+
+For convenience, the following aliases are provided:
+
+- `gi`: Alias for `gitignore`
+- `gii`: Alias for `gitignore-append`
+- `gie`: Alias for `gitignore-edit`
 
 ## Installation
 
@@ -76,13 +84,13 @@ The plugin also supports [global gitignore](https://git-scm.com/docs/gitignore#_
 
 ```sh
 # Show current global gitignore file's content
-gi -g
+gitignore -g
 
 # Append templates to the global gitignore file
-gii -g TEMPLATE
+gitignore-append -g TEMPLATE
 
 # Open global gitignore file in editor ($EDITOR)
-gie -g
+gitignore-edit -g
 ```
 
 ### Custom templates
