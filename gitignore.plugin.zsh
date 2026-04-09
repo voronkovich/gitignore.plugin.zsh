@@ -128,14 +128,15 @@ _gitignore_global() {
 }
 
 _gitignore_template() {
-    local tpath file
+    setopt local_options extendedglob
+    local tpath files
 
     for tpath in "${(@s/:/)ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS}"; do
-        file="$(command find "${tpath}" -iname "${1}.gitignore")"
-        if  [[ ! -z "${file}" ]]; then
+        files=( "${tpath}"/**/(#i)"${1}.gitignore"(N) )
+        if [[ ${#files} -gt 0 ]]; then
             echo
-            echo "### $(_gitignore_template_name "${file}")"
-            command cat "${file}"
+            echo "### ${files[1]:t:r}"
+            command cat "${files[1]}"
             return
         fi
     done
@@ -143,27 +144,13 @@ _gitignore_template() {
     return 1
 }
 
-_gitignore_template_name() {
-    local file
-
-    if [[ $# -gt 0 ]]; then
-        for file; do
-            echo "${${file:t}%.gitignore}"
-        done
-        return
-    fi
-
-    while read file; do
-        echo "${${file:t:l}%.gitignore}"
-    done | command sort -u
-}
-
 _gitignore_template_list() {
+    setopt local_options extendedglob
     local tpath
 
     for tpath in "${(@s/:/)ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS}"; do
-        command find "${tpath}" -type f -name "*.gitignore"
-    done | _gitignore_template_name
+        print -l "${tpath}"/**/*.gitignore(N:l:t:r)
+    done | command sort -u
 }
 
 _gitignore() {
