@@ -33,7 +33,7 @@ gitignore vim eclipse symfony
 For convenience, the following aliases are provided:
 
 - `gi`: Alias for `gitignore`
-- `gii`: Alias for `gitignore-append`
+- `gia`: Alias for `gitignore-append`
 - `gie`: Alias for `gitignore-edit`
 
 ## Installation

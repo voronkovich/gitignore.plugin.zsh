@@ -5,6 +5,7 @@ export ZSH_PLUGIN_GITIGNORE_PATH="${0:h}"
 export ZSH_PLUGIN_GITIGNORE_TEMPLATE_PATHS="${ZSH_PLUGIN_GITIGNORE_PATH}/templates"
 
 alias gi=gitignore
+alias gia=gitignore-append
 alias gii=gitignore-append
 alias gie=gitignore-edit
 
