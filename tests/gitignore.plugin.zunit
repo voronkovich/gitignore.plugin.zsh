@@ -1,8 +1,9 @@
 #!/usr/bin/env zunit
 
 @test 'Plugin defines completions' {
-    assert "${_COMPDEF_ARGS[-1]}" same_as '_gitignore gitignore-append'
-    assert "${_COMPDEF_ARGS[-2]}" same_as '_gitignore gitignore'
+    assert "${_COMPDEF_ARGS[-1]}" same_as '_gitignore_edit gitignore-edit'
+    assert "${_COMPDEF_ARGS[-2]}" same_as '_gitignore gitignore-append'
+    assert "${_COMPDEF_ARGS[-3]}" same_as '_gitignore gitignore'
 }
 
 @test 'Lists all templates' {

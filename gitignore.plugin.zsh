@@ -154,9 +154,18 @@ _gitignore_template_list() {
 }
 
 _gitignore() {
-  compset -P '*,'
-  compadd -S '' $(_gitignore_template_list)
+  _arguments -s \
+    '(-h --help)'{-h,--help}'[show help message]' \
+    '(-g --global)'{-g,--global}'[use global gitignore file]' \
+    '*:template:($(_gitignore_template_list))'
+}
+
+_gitignore_edit() {
+  _arguments \
+    '(-h --help)'{-h,--help}'[show help message]' \
+    '(-g --global)'{-g,--global}'[use global gitignore file]'
 }
 
 compdef _gitignore gitignore
 compdef _gitignore gitignore-append
+compdef _gitignore_edit gitignore-edit
